@@ -1,9 +1,45 @@
+class Storage {
+    constructor(notesKey) {
+        this.notesKey = notesKey || 'notesapp.notes';
+        this.load();
+    }
+
+    push(item) {
+        this.data.push(item);
+    }
+
+    pop() {
+        this.data.pop();
+    }
+
+    save() {
+        localStorage.setItem(this.notesKey, JSON.stringify(this.data));
+    }
+
+    load() {
+        this.data = JSON.parse(localStorage.getItem(this.notesKey)) || [];
+    }
+}
+
+class Note {
+    constructor(options) {
+        options = options || {};
+        this.id = options.id || Note.newNoteIndex;
+        this.title = options.title || "New Note";
+        this.text = options.text || "";
+        this.color = options.color || Note.selectedColor;
+    }
+}
+Note.selectedColor = "yellow";
+Note.availableColors = "yellow lime aqua black purple blue";
+
 (function () {
-    const availableColors = "yellow lime aqua black purple blue";
 
-    const data = [];
-    let newCardIndex = 0;
-
+    const storage = new Storage('notesapp.notes');
+    for (let i = 0 ; i < storage.data.length; i++) {
+        loadCard(i);
+    }
+    
     function getCardId(cardChild) {
         return parseInt($(cardChild).closest('.card-template').attr('id'), 10);
     }
@@ -13,19 +49,20 @@
     }
 
     function saveCard(idx, card) {
-        data[idx].title = card.find('.card-title').text();
-        data[idx].text = card.find('.card-text').text();
-        data[idx].color = card.find('.card-body').attr('class').replace('card-body ', '');
+        storage.data[idx].title = card.find('.card-title').text();
+        storage.data[idx].text = card.find('.card-text').text();
+        storage.data[idx].color = card.find('.card-body').attr('class').replace('card-body ', '');
+        storage.save();
     }
 
     function loadCardData(id, card) {
-        card.find('.card-title').text(data[id].title);
-        card.find('.card-text').text(data[id].text);
-        card.find('.card-title').removeClass(availableColors).addClass(data[id].color);
-        card.find('.card-body').removeClass(availableColors).addClass(data[id].color);
-        card.find('.close-icon').removeClass(availableColors).addClass(data[id].color);
-        card.find('.palette-icon').removeClass(availableColors).addClass(data[id].color);
-        card.find('.dropdown .fa-palette').removeClass(availableColors).addClass(data[id].color);
+        card.find('.card-title').text(storage.data[id].title);
+        card.find('.card-text').text(storage.data[id].text);
+        card.find('.card-title').removeClass(Note.availableColors).addClass(storage.data[id].color);
+        card.find('.card-body').removeClass(Note.availableColors).addClass(storage.data[id].color);
+        card.find('.close-icon').removeClass(Note.availableColors).addClass(storage.data[id].color);
+        card.find('.palette-icon').removeClass(Note.availableColors).addClass(storage.data[id].color);
+        card.find('.dropdown .fa-palette').removeClass(Note.availableColors).addClass(storage.data[id].color);
     }
 
     function loadCard(id, card) {
@@ -38,7 +75,7 @@
             return;
         }
 
-        if (newCardIndex % 2 == 0) {
+        if (id % 2 == 0) {
             const newRow = $("<div></div>");
             newRow.addClass(["card-columns", "row"]);
             newRow.append(card);
@@ -68,42 +105,35 @@
         $('.container-fluid').off('focusout', '.card-body', saveOnBlur);
         const idx = getCardId(this);
 
-        for(let i = idx + 1 ; i < newCardIndex ; i++) {
-            data[i - 1] = data[i];
-            data[i - 1].id = i - 1;
+        for(let i = idx + 1 ; i < storage.data.length ; i++) {
+            storage.data[i - 1] = storage.data[i];
+            storage.data[i - 1].id = i - 1;
         }
-        data.pop();
+        storage.pop();
 
         const card = getCard(this);
         card.fadeOut('slow', function () {
             card.show();
 
-            for(let i = idx; i < data.length ; i++) {
+            for(let i = idx; i < storage.data.length ; i++) {
                 loadCard(i, $('#' + i));
             }
 
-            newCardIndex -= 1;
-            $('#' + newCardIndex).remove();
+            $('#' + storage.data.length).remove();
             $('.container-fluid').on('focusout', '.card-body', saveOnBlur);
         });
     })
 
     $('.container-fluid').on("click", "a.color-picker", function() {
-        const color = this.innerText.toLowerCase();
+        Note.selectedColor = this.innerText.toLowerCase();
         const id = getCardId(this);
-        data[id].color = color;
+        storage.data[id].color = Note.selectedColor;
         loadCardData(id, getCard(this));
     });
 
     // CREATE
     $('#new-btn').click( function() {
-        data.push({
-            'id': newCardIndex,
-            'title': 'New Note',
-            'text': '',
-            'color': 'yellow'
-        });
-        loadCard(newCardIndex);
-        newCardIndex += 1;
+        storage.push(new Note());
+        loadCard(storage.data.length - 1);
     });
 })();
