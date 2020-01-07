@@ -1,0 +1,55 @@
+<html> 
+    <head>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+            crossorigin="anonymous">
+            
+        <script src="https://kit.fontawesome.com/69f0f4c20b.js" crossorigin="anonymous"></script>
+
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script 
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"   
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h2 class="mx-3 my-4">My Notes</h2>
+        <div class="container-fluid">
+        </div>
+
+        <button id="new-btn"
+                class="btn btn-primary btn-circle btn-xl float-right m-2"
+                >+</button>
+
+        <div id="card-template" class="card-template col-lg-6">
+            <div class="card">
+                <div class="card-body yellow">
+                    <button class="btn btn-primary-outline float-right close-icon"><i class="fa fa-times"></i></button>
+                    <h5 class="card-title text-muted" contenteditable="true">Title</h5>
+                    <p class="card-text" contenteditable="true">Note</p>
+                    <button class="btn btn-primary m-1 float-right save-btn">Save</button>
+                    <div class="dropdown">
+                        <button class="btn btn-primary-outline palette-icon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
+                            <i class="btn fas fa-palette"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item color-picker yellow" href="#">Yellow</a>
+                            <a class="dropdown-item color-picker lime" href="#">Lime</a>
+                            <a class="dropdown-item color-picker aqua" href="#">Aqua</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <link rel="stylesheet" href="index.css"/>
+        <script src="index.js"> </script>
+    </body>
+</html>

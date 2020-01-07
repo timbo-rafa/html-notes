@@ -1,0 +1,67 @@
+.cardxx {
+    width: 18rem;
+}
+
+div.alert {
+    display: none;
+}
+
+.card p.card-text {
+    min-height: 100;
+}
+
+div.dropdown {
+    display: inline-block;
+}
+
+div#card-template {
+    display:none;
+}
+
+button.save-btn {
+    z-index: 10;
+}
+
+button#new-btn {
+    position: relative;
+    border-radius: 50%;
+}
+
+.card .aqua {
+    background-color: aqua;
+}
+
+.card .blue {
+    color: white;
+    background-color: blue;
+}
+
+.card .yellow {
+    background-color: yellow;
+}
+
+.card .pink {
+    background-color: pink;
+}
+
+.card .lime {
+    background-color: lime;
+}
+
+.card .purple {
+    background-color: purple;
+}
+
+.card .black {
+    color: white;
+    background-color: black;
+}
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
