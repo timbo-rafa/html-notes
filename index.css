@@ -40,15 +40,12 @@ button#new-btn {
     background-color: yellow;
 }
 
-.card .pink {
-    background-color: pink;
-}
-
 .card .lime {
     background-color: lime;
 }
 
 .card .purple {
+    color: white;
     background-color: purple;
 }
 
