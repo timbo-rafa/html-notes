@@ -94,12 +94,6 @@ Note.availableColors = "yellow lime aqua black purple blue";
 
     $('.container-fluid').on('focusout', '.card-body', saveOnBlur);
 
-    $('.container-fluid').on('click', 'button.save-btn', function() {
-        card = getCard(this);
-        const idx = getCardId(this);
-        saveCard(idx, card);
-    });
-
     // DELETE
     $('.container-fluid').on('click', '.close-icon', function() {
         $('.container-fluid').off('focusout', '.card-body', saveOnBlur);
